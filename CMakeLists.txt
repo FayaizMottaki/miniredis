@@ -20,3 +20,22 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     )
 endif()
 
+enable_testing()
+
+add_executable(database_test
+    tests/database_test.cpp
+    src/database.cpp
+)
+
+target_include_directories(database_test PRIVATE include)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    target_compile_options(database_test PRIVATE
+        -Wall -Wextra -Wpedantic
+    )
+endif()
+
+add_test(
+    NAME DatabaseTests
+    COMMAND database_test
+)
