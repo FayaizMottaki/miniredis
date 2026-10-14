@@ -5,6 +5,11 @@
 #include <sstream>
 #include <string>
 
+bool hasExtraArguments(std::istringstream& input) {
+    std::string extra;
+    return static_cast<bool>(input >> extra);
+}
+
 int main() {
     Database db;
 
@@ -56,6 +61,12 @@ int main() {
                 std::cout << "ERR missing key\n";
                 continue;
             }
+            std::string extra;
+
+   if (input >> extra) {
+    std::cout << "ERR too many arguments\n";
+    continue;
+}
 
             auto result = db.get(key);
 
@@ -73,8 +84,16 @@ int main() {
                 std::cout << "ERR missing key\n";
                 continue;
             }
+            std::string extra;
 
-            std::cout << db.del(key) << '\n';
+    if (input >> extra) {
+        std::cout << "ERR too many arguments\n";
+        continue;
+    }
+
+    std::cout << std::boolalpha << db.del(key) << '\n';
+
+            
         }
 
         else if (command == "EXISTS") {
@@ -85,10 +104,22 @@ int main() {
                 continue;
             }
 
-            std::cout << db.exists(key) << '\n';
+            std::string extra;
+
+    if (input >> extra) {
+        std::cout << "ERR too many arguments\n";
+        continue;
+    }
+
+    std::cout << std::boolalpha << db.exists(key) << '\n';
         }
 
         else if (command == "HELP") {
+            std::string extra;
+            if(input>>extra){
+                std::cout << "ERR too many arguments\n";
+                continue;
+            }
             std::cout
                 << "Commands:\n"
                 << "  SET <key> <value>\n"
@@ -100,7 +131,12 @@ int main() {
         }
 
         else if (command == "EXIT") {
-            std::cout << "Thanks for using my redis\n";
+              std::string extra;
+            if(input>>extra){
+                std::cout << "ERR too many arguments\n";
+                continue;
+            }
+            std::cout << "Thanks for using my miniredis\n";
             break;
         }
 
