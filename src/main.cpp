@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-
 bool hasExtraArguments(std::istringstream& input) {
     std::string extra;
     return static_cast<bool>(input >> extra);
@@ -61,9 +60,7 @@ int main() {
                 std::cout << "ERR missing key\n";
                 continue;
             }
-            std::string extra;
-
-   if (input >> extra) {
+            if (hasExtraArguments(input)) {
     std::cout << "ERR too many arguments\n";
     continue;
 }
@@ -84,12 +81,10 @@ int main() {
                 std::cout << "ERR missing key\n";
                 continue;
             }
-            std::string extra;
-
-    if (input >> extra) {
-        std::cout << "ERR too many arguments\n";
-        continue;
-    }
+            if (hasExtraArguments(input)) {
+    std::cout << "ERR too many arguments\n";
+    continue;
+}
 
     std::cout << std::boolalpha << db.del(key) << '\n';
 
@@ -104,22 +99,19 @@ int main() {
                 continue;
             }
 
-            std::string extra;
-
-    if (input >> extra) {
-        std::cout << "ERR too many arguments\n";
-        continue;
-    }
+  if (hasExtraArguments(input)) {
+    std::cout << "ERR too many arguments\n";
+    continue;
+}
 
     std::cout << std::boolalpha << db.exists(key) << '\n';
         }
 
         else if (command == "HELP") {
-            std::string extra;
-            if(input>>extra){
-                std::cout << "ERR too many arguments\n";
-                continue;
-            }
+          if (hasExtraArguments(input)) {
+    std::cout << "ERR too many arguments\n";
+    continue;
+}
             std::cout
                 << "Commands:\n"
                 << "  SET <key> <value>\n"
@@ -131,11 +123,10 @@ int main() {
         }
 
         else if (command == "EXIT") {
-              std::string extra;
-            if(input>>extra){
-                std::cout << "ERR too many arguments\n";
-                continue;
-            }
+        if (hasExtraArguments(input)) {
+    std::cout << "ERR too many arguments\n";
+    continue;
+}
             std::cout << "Thanks for using my miniredis\n";
             break;
         }
